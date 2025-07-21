@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Heart Disease Predictor</h1>
+        <div class="logo">
+            <span class="logo-heart">❤️</span>
+        </div>
+        <form method="POST">
+            <div class="form-columns">
+                <div class="form-col">
+                    <label>Age (years):
+                        <input type="number" name="age" min="18" max="100" required value="{{ values.get('age', '') }}">
+                        <div class="input-hint">18 - 100</div>
+                    </label>
+                    <label>Anaemia (1 = Yes, 0 = No):
+                        <input type="number" name="anaemia" min="0" max="1" required value="{{ values.get('anaemia', '') }}">
+                        <div class="input-hint">0 or 1</div>
+                    </label>
+                    <label>Creatinine Phosphokinase (mcg/L):
+                        <input type="number" name="creatinine_phosphokinase" min="0" required value="{{ values.get('creatinine_phosphokinase', '') }}">
+                        <div class="input-hint">0 or higher</div>
+                    </label>
+                    <label>Diabetes (1 = Yes, 0 = No):
+                        <input type="number" name="diabetes" min="0" max="1" required value="{{ values.get('diabetes', '') }}">
+                        <div class="input-hint">0 or 1</div>
+                    </label>
+                    <label>Ejection Fraction (%):
+                        <input type="number" name="ejection_fraction" min="10" max="80" required value="{{ values.get('ejection_fraction', '') }}">
+                        <div class="input-hint">10 - 80</div>
+                    </label>
+                    <label>High Blood Pressure (1 = Yes, 0 = No):
+                        <input type="number" name="high_blood_pressure" min="0" max="1" required value="{{ values.get('high_blood_pressure', '') }}">
+                        <div class="input-hint">0 or 1</div>
+                    </label>
+                </div>
+                <div class="form-col">
+                    <label>Platelets (kiloplatelets/mL):
+                        <input type="number" name="platelets" min="0" required value="{{ values.get('platelets', '') }}">
+                        <div class="input-hint">0 or higher</div>
+                    </label>
+                    <label>Serum Creatinine (mg/dL):
+                        <input type="number" name="serum_creatinine" min="0" step="0.01" required value="{{ values.get('serum_creatinine', '') }}">
+                        <div class="input-hint">0 or higher</div>
+                    </label>
+                    <label>Serum Sodium (mEq/L):
+                        <input type="number" name="serum_sodium" min="100" max="150" required value="{{ values.get('serum_sodium', '') }}">
+                        <div class="input-hint">100 - 150</div>
+                    </label>
+                    <label>Sex (1 = Male, 0 = Female):
+                        <input type="number" name="sex" min="0" max="1" required value="{{ values.get('sex', '') }}">
+                        <div class="input-hint">0 or 1</div>
+                    </label>
+                    <label>Smoking (1 = Yes, 0 = No):
+                        <input type="number" name="smoking" min="0" max="1" required value="{{ values.get('smoking', '') }}">
+                        <div class="input-hint">0 or 1</div>
+                    </label>
+                    <label>Time (follow-up period in days):
+                        <input type="number" name="time" min="0" required value="{{ values.get('time', '') }}">
+                        <div class="input-hint">0 or higher</div>
+                    </label>
+                </div>
+            </div>
+            <div class="form-submit-row">
+                <button type="submit">Predict</button>
+            </div>
+            <div class="form-submit-row">
+                <button type="button" id="reset-btn" style="background:linear-gradient(90deg,#4b8bff 0%,#23232b 100%);color:#fff;margin-top:0.5em;">Reset</button>
+            </div>
+        </form>
+        {% if prediction %}
+            <div class="result">
+                <h2>Result: {{ prediction }}</h2>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var resetBtn = document.getElementById('reset-btn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    // Clear all input fields
+                    document.querySelectorAll('input[type=number]').forEach(function(input) {
+                        input.value = '';
+                    });
+                    // Hide result
+                    var resultDiv = document.querySelector('.result');
+                    if (resultDiv) resultDiv.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
